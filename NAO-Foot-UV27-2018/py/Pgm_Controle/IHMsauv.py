@@ -12,11 +12,47 @@ Affichage graphique sur écran :
 """
 
 import pygame
+from pygame.locals import* 
 
-def init():
+def IHM():
+    
     pygame.init()
-    fenetre = pygame.display.set_mode((640, 480))
-    aff = int(input())
-    while aff:
-        continue
-        aff = int(input())
+    
+    #Ouverture de la fenêtre Pygame
+    fenetre = pygame.display.set_mode((709,489), RESIZABLE)
+    
+    #Chargement et collage du fond
+    fond = pygame.image.load("terrain-de-football.jpg").convert()
+    fenetre.blit(fond, (0,0))
+    
+    #Chargement fleche
+    arrow = pygame.image.load("fleche.png")
+    arrow.set_colorkey((255,255,255)) #Rend le blanc (valeur RGB : 255,255,255) de l'image transparent
+    
+    #Chargement et collage du robot
+    perso = pygame.image.load("robot_nao.png").convert_alpha()
+    fenetre.blit(perso, (310,150))
+    
+    #Rafraîchissement de l'écran
+    continuer = 1
+
+    #Boucle infinie
+    while continuer:
+        pygame.display.flip()
+        for event in pygame.event.get():   #On parcours la liste de tous les événements reçus
+            
+            if event.type == pygame.QUIT:     #Si un de ces événements est de type QUIT
+                continuer = 0      #On arrête la boucle
+                pygame.quit()
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP: #Si "flèche haut"
+                    print("toto")
+                    fenetre.blit(arrow, (450,110))
+                    pygame.display.flip()
+
+
+
+
+
+IHM()
