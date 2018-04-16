@@ -8,9 +8,27 @@ import motion
 from naoqi import ALProxy
 import math
 
-pygame.init()
+#pygame.init()
 # draw a little area (to fucus on to get keys)
-pygame.display.set_mode((100,  100))
+#pygame.display.set_mode((100,  100))
+
+
+pygame.init()
+#Ouverture de la fenêtre Pygame
+fenetre = pygame.display.set_mode((489,709), RESIZABLE)
+#Chargement et collage du fond
+fond = pygame.image.load("terrain-de-football.jpg").convert()
+fenetre.blit(fond, (0,0))
+#Chargement fleche
+arrow = pygame.image.load("fleche.png")
+arrow_rot_l = pygame.image.load("fleche_rot_l.png")
+arrow_rot_r = pygame.image.load("fleche_rot_r.png")
+#Chargement et collage du robot
+perso = pygame.image.load("robot_nao.png").convert_alpha()
+fenetre.blit(perso, (190,260))
+
+
+
 
 # global variables
 f = fsm.fsm();  # finite state machine
@@ -20,6 +38,7 @@ global is_sleeping
 is_sleeping = False
 global evitement
 evitement = False
+continuer = 1 #Rafraîchissement de l'écran
 
 robotIp="localhost"
 robotPort=11216
@@ -175,6 +194,14 @@ def possibilityForward():
     Frequency = 0.8
     motionProxy.setWalkTargetVelocity(X, Y, Theta, Frequency) # do some work
     time.sleep(tseq)
+    
+    #IHM
+    fenetre.blit(fond, (0,0))
+    fenetre.blit(perso, (190,260))
+    arrow_up = pygame.transform.rotate(arrow, 90)
+    fenetre.blit(arrow_up, (110,0))
+    pygame.display.flip()
+    
     event="Stay" # define the default event
 #    sonarProxy.subscribe("SonarApp");
 #    time.sleep(0.25)
@@ -207,6 +234,14 @@ def possibilityBackward():
     Frequency = 0.8
     motionProxy.setWalkTargetVelocity(X, Y, Theta, Frequency) # do some work
     time.sleep(tseq)
+    
+    #IHM
+    fenetre.blit(fond, (0,0))
+    fenetre.blit(perso, (190,260))
+    arrow_down = pygame.transform.rotate(arrow, -90)
+    fenetre.blit(arrow_down, (110,450))
+    pygame.display.flip()
+    
     event="Stay" # define the default event
     for even in pygame.event.get():
         if even.type == pygame.QUIT:
@@ -234,6 +269,14 @@ def possibilityRight():
     Frequency = 0.8
     motionProxy.setWalkTargetVelocity(X, Y, Theta, Frequency)  # do some work
     time.sleep(tseq)
+    
+    #IHM
+    fenetre.blit(fond, (0,0))
+    fenetre.blit(perso, (190,260))
+    arrow_right = pygame.transform.scale(arrow_rot_r, (300, 300))
+    fenetre.blit(arrow_right, (100,220))
+    pygame.display.flip()
+    
     event="Stay" # define the default event
     for even in pygame.event.get():
         if even.type == pygame.QUIT:
@@ -261,6 +304,14 @@ def possibilityLeft():
     Frequency = 0.8
     motionProxy.setWalkTargetVelocity(X, Y, Theta, Frequency) # do some work
     time.sleep(tseq)
+    
+    #IHM
+    fenetre.blit(fond, (0,0))
+    fenetre.blit(perso, (190,260))
+    arrow_left = pygame.transform.scale(arrow_rot_l, (300, 300))
+    fenetre.blit(arrow_left, (100,220))
+    pygame.display.flip()
+    
     event="Stay" # define the default event
     for even in pygame.event.get():
         if even.type == pygame.QUIT:
@@ -288,6 +339,16 @@ def possibilityBackwardLeft():
     Frequency = 0.8
     motionProxy.setWalkTargetVelocity(X, Y, Theta, Frequency) # do some work
     time.sleep(tseq)
+    
+    #IHM
+    fenetre.blit(fond, (0,0))
+    fenetre.blit(perso, (190,260))
+    arrow_dbl = pygame.transform.rotate(arrow, -140)
+    arrow_dbl = pygame.transform.scale(arrow_dbl, (150, 300))
+    arrow_dbl.set_colorkey((255,255,255))
+    fenetre.blit(arrow_dbl, (70,370))
+    pygame.display.flip()
+    
     event="Stay" # define the default event
     for even in pygame.event.get():
         if even.type == pygame.QUIT:
@@ -318,6 +379,16 @@ def possibilityBackwardRight():
     Frequency = 0.8
     motionProxy.setWalkTargetVelocity(X, Y, Theta, Frequency) # do some work
     time.sleep(tseq)
+    
+    #IHM
+    fenetre.blit(fond, (0,0))
+    fenetre.blit(perso, (190,260))
+    arrow_dbl = pygame.transform.rotate(arrow, -40)
+    arrow_dbl = pygame.transform.scale(arrow_dbl, (150, 300))
+    arrow_dbl.set_colorkey((255,255,255))
+    fenetre.blit(arrow_dbl, (250,370))
+    pygame.display.flip()
+    
     event="Stay" # define the default event
     for even in pygame.event.get():
         if even.type == pygame.QUIT:
@@ -348,6 +419,16 @@ def possibilityForwardLeft():
     Frequency = 0.8
     motionProxy.setWalkTargetVelocity(X, Y, Theta, Frequency) # do some work
     time.sleep(tseq)
+    
+    #IHM
+    fenetre.blit(fond, (0,0))
+    fenetre.blit(perso, (190,260))
+    arrow_dbl = pygame.transform.rotate(arrow, 140)
+    arrow_dbl = pygame.transform.scale(arrow_dbl, (150, 300))
+    arrow_dbl.set_colorkey((255,255,255))
+    fenetre.blit(arrow_dbl, (70,70))
+    pygame.display.flip()
+    
     event="Stay" # define the default event
     for even in pygame.event.get():
         if even.type == pygame.QUIT:
@@ -378,6 +459,16 @@ def possibilityForwardRight():
     Frequency = 0.8
     motionProxy.setWalkTargetVelocity(X, Y, Theta, Frequency) # do some work
     time.sleep(tseq)
+    
+    #IHM
+    fenetre.blit(fond, (0,0))
+    fenetre.blit(perso, (190,260))
+    arrow_dbl = pygame.transform.rotate(arrow, 40)
+    arrow_dbl = pygame.transform.scale(arrow_dbl, (150, 300))
+    arrow_dbl.set_colorkey((255,255,255))
+    fenetre.blit(arrow_dbl, (250,70))
+    pygame.display.flip()
+    
     event="Stay" # define the default event
     for even in pygame.event.get():
         if even.type == pygame.QUIT:
